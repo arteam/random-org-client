@@ -11,19 +11,19 @@ import java.util.List;
  *
  * @author Artem Prigoda
  */
-public class RandomInfo {
+public class RandomInfo<T extends Number> {
 
-    private final List<Integer> data;
+    private final List<T> data;
 
     private final Date completionTime;
 
-    public RandomInfo(@JsonProperty("data") List<Integer> data,
+    public RandomInfo(@JsonProperty("data") List<T> data,
                       @JsonProperty("completionTime") Date completionTime) {
         this.data = data;
         this.completionTime = completionTime;
     }
 
-    public List<Integer> getData() {
+    public List<T> getData() {
         return data;
     }
 

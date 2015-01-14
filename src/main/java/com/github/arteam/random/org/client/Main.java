@@ -16,5 +16,7 @@ public class Main {
         RandomOrgService randomOrgService = new RandomOrgService(apiKey);
         List<Integer> randomIds = randomOrgService.generate(10, 0, 100);
         System.out.println(randomIds);
+        List<Double> randomDoubles = randomOrgService.generateDecimalFractions(10, 4);
+        System.out.println(randomDoubles);
     }
 }

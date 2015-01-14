@@ -8,9 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Artem Prigoda
  */
-public class RandomOrgResult {
+public class RandomOrgResult<T extends Number> {
 
-    private final RandomInfo random;
+    private final RandomInfo<T> random;
 
     private final int bitsUsed;
 
@@ -20,7 +20,7 @@ public class RandomOrgResult {
 
     private final int advisoryDelay;
 
-    public RandomOrgResult(@JsonProperty("random") RandomInfo random, @JsonProperty("bitsUsed") int bitsUsed,
+    public RandomOrgResult(@JsonProperty("random") RandomInfo<T> random, @JsonProperty("bitsUsed") int bitsUsed,
                            @JsonProperty("bitsLeft") int bitsLeft, @JsonProperty("requestsLeft") int requestsLeft,
                            @JsonProperty("advisoryDelay") int advisoryDelay) {
         this.random = random;
@@ -30,7 +30,7 @@ public class RandomOrgResult {
         this.advisoryDelay = advisoryDelay;
     }
 
-    public RandomInfo getRandom() {
+    public RandomInfo<T> getRandom() {
         return random;
     }
 

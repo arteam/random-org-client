@@ -1,5 +1,6 @@
 package com.github.arteam.random.org.client;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.arteam.random.org.client.domain.RandomOrgResult;
 import com.github.arteam.simplejsonrpc.client.JsonRpcClient;
@@ -13,10 +14,12 @@ import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,16 +58,30 @@ public class RandomOrgService {
     }
 
     public List<Integer> generate(int amount, int min, int max) {
-        RandomOrgResult response = jsonRpcClient.createRequest()
+        return jsonRpcClient.createRequest()
                 .id(idGenerator.generate())
                 .method("generateIntegers")
                 .param("apiKey", apiKey)
                 .param("n", amount)
                 .param("min", min)
                 .param("max", max)
-                .returnAs(RandomOrgResult.class)
-                .execute();
-        return response != null ? response.getRandom().getData() : new ArrayList<>();
+                .returnAs(new TypeReference<RandomOrgResult<Integer>>() { })
+                .execute()
+                .getRandom()
+                .getData();
+    }
+
+    public List<Double> generateDecimalFractions(int amount, int decimalPlaces) {
+        return jsonRpcClient.createRequest()
+                .id(idGenerator.generate())
+                .method("generateDecimalFractions")
+                .param("apiKey", apiKey)
+                .param("n", amount)
+                .param("decimalPlaces", decimalPlaces)
+                .returnAs(new TypeReference<RandomOrgResult<Double>>() { })
+                .execute()
+                .getRandom()
+                .getData();
     }
 
     public void stop() {
