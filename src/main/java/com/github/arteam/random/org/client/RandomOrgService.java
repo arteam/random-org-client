@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.arteam.random.org.client.domain.RandomOrgResult;
 import com.github.arteam.simplejsonrpc.client.JsonRpcClient;
+import com.github.arteam.simplejsonrpc.client.builder.RequestBuilder;
 import com.github.arteam.simplejsonrpc.client.generator.CurrentTimeIdGenerator;
 import com.github.arteam.simplejsonrpc.client.generator.IdGenerator;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -12,6 +13,7 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -57,15 +59,28 @@ public class RandomOrgService {
         }, new ObjectMapper().setDateFormat(RANDOM_ORG_DATE_FORMAT));
     }
 
-    public List<Integer> generate(int amount, int min, int max) {
-        return jsonRpcClient.createRequest()
+    public List<Integer> generateIntegers(int amount, int min, int max) {
+        return generateIntegers(amount, min, max, true, 10);
+    }
+
+    public List<Integer> generateIntegers(int amount, int min, int max, boolean replacement,
+                                          int base) {
+        RequestBuilder<Object> builder = jsonRpcClient.createRequest()
                 .id(idGenerator.generate())
                 .method("generateIntegers")
                 .param("apiKey", apiKey)
                 .param("n", amount)
                 .param("min", min)
-                .param("max", max)
-                .returnAs(new TypeReference<RandomOrgResult<Integer>>() { })
+                .param("max", max);
+        if (!replacement) {
+            builder.param("replacement", false);
+        }
+        if (base != 10) {
+            builder.param("base", base);
+        }
+        return builder
+                .returnAs(new TypeReference<RandomOrgResult<Integer>>() {
+                })
                 .execute()
                 .getRandom()
                 .getData();
@@ -78,7 +93,8 @@ public class RandomOrgService {
                 .param("apiKey", apiKey)
                 .param("n", amount)
                 .param("decimalPlaces", decimalPlaces)
-                .returnAs(new TypeReference<RandomOrgResult<Double>>() { })
+                .returnAs(new TypeReference<RandomOrgResult<Double>>() {
+                })
                 .execute()
                 .getRandom()
                 .getData();
