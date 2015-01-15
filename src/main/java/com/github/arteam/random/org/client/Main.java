@@ -13,10 +13,12 @@ public class Main {
     public static void main(String[] args) {
 
         String apiKey = System.getProperty("api.key");
-        RandomOrgService randomOrgService = new RandomOrgService(apiKey);
-        List<Integer> randomIds = randomOrgService.generateIntegers(10, 0, 100);
+        RandomOrg randomOrg = new RandomOrg(apiKey);
+        List<Integer> randomIds = randomOrg.generateIntegers(10, 0, 100);
         System.out.println(randomIds);
-        List<Double> randomDoubles = randomOrgService.generateDecimalFractions(10, 4);
+        List<Integer> extendedRandomIds = randomOrg.generateIntegers(10, 0, 100, false, 10);
+        System.out.println(extendedRandomIds);
+        List<Double> randomDoubles = randomOrg.generateDecimalFractions(10, 4);
         System.out.println(randomDoubles);
     }
 }
