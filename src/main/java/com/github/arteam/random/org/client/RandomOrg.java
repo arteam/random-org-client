@@ -83,6 +83,11 @@ public class RandomOrg {
                 .getRandom().getData();
     }
 
+    public List<Double> generateGaussians(int amount, double mean, double standardDeviation, int significantDigits) {
+        return service.generateGaussians(apiKey, amount, mean, standardDeviation, significantDigits)
+                .getRandom().getData();
+    }
+
     public void stop() {
         try {
             httpClient.close();

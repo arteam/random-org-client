@@ -35,7 +35,7 @@ import java.util.List;
  * @author Artem Prigoda
  */
 @JsonRpcService
- interface RandomOrgService {
+interface RandomOrgService {
 
     @JsonRpcMethod("generateIntegers")
     RandomOrgResult<Integer> generateIntegers(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
@@ -49,11 +49,17 @@ import java.util.List;
 
     @JsonRpcMethod("generateDecimalFractions")
     RandomOrgResult<Double> generateDecimalFractions(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
-                                              @JsonRpcParam("decimalPlaces") int decimalPlaces,
-                                              @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement,
-                                              @JsonRpcOptional @JsonRpcParam("base") Integer base);
+                                                     @JsonRpcParam("decimalPlaces") int decimalPlaces,
+                                                     @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement,
+                                                     @JsonRpcOptional @JsonRpcParam("base") Integer base);
 
     @JsonRpcMethod("generateDecimalFractions")
     RandomOrgResult<Double> generateDecimalFractions(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
                                                      @JsonRpcParam("decimalPlaces") int decimalPlaces);
+
+    @JsonRpcMethod("generateGaussians")
+    RandomOrgResult<Double> generateGaussians(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
+                                              @JsonRpcParam("mean") double mean,
+                                              @JsonRpcParam("standardDeviation") double standardDeviation,
+                                              @JsonRpcParam("significantDigits") int significantDigits);
 }
