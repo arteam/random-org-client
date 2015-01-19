@@ -1,6 +1,7 @@
 package com.github.arteam.random.org.client;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.arteam.random.org.client.domain.RandomOrgResult;
 import com.github.arteam.simplejsonrpc.client.JsonRpcClient;
@@ -33,11 +34,11 @@ public class RandomOrg {
 
     private static final URI RANDOM_ORG_GATEWAY = URI.create("https://api.random.org/json-rpc/1/invoke");
     private static final SimpleDateFormat RANDOM_ORG_DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    private static final String ALPHABET = "abcdefghijklmnopqrstuvwxyz";
 
     private final String apiKey;
     private CloseableHttpClient httpClient;
     private RandomOrgService service;
-    private IdGenerator<Long> idGenerator = new CurrentTimeIdGenerator();
 
     public RandomOrg(String apiKey) {
         this.apiKey = apiKey;
@@ -55,7 +56,9 @@ public class RandomOrg {
                 System.out.println("Response: " + data);
                 return data;
             }
-        }, new ObjectMapper().setDateFormat(RANDOM_ORG_DATE_FORMAT))
+        }, new ObjectMapper()
+                .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
+                .setDateFormat(RANDOM_ORG_DATE_FORMAT))
                 .onDemand(RandomOrgService.class);
     }
 
@@ -86,6 +89,10 @@ public class RandomOrg {
     public List<Double> generateGaussians(int amount, double mean, double standardDeviation, int significantDigits) {
         return service.generateGaussians(apiKey, amount, mean, standardDeviation, significantDigits)
                 .getRandom().getData();
+    }
+
+    public List<String> generateStrings(int amount, int length) {
+        return service.generateStrings(apiKey, amount, length, ALPHABET, null).getRandom().getData();
     }
 
     public void stop() {

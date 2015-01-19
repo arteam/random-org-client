@@ -11,7 +11,7 @@ import java.util.List;
  *
  * @author Artem Prigoda
  */
-public class RandomInfo<T extends Number> {
+public class RandomInfo<T> {
 
     private final List<T> data;
 

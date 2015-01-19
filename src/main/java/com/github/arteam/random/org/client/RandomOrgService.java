@@ -62,4 +62,10 @@ interface RandomOrgService {
                                               @JsonRpcParam("mean") double mean,
                                               @JsonRpcParam("standardDeviation") double standardDeviation,
                                               @JsonRpcParam("significantDigits") int significantDigits);
+
+    @JsonRpcMethod("generateStrings")
+    RandomOrgResult<String> generateStrings(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
+                                            @JsonRpcParam("length") int length,
+                                            @JsonRpcParam("characters") String characters,
+                                            @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement);
 }

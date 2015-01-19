@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *
  * @author Artem Prigoda
  */
-public class RandomOrgResult<T extends Number> {
+public class RandomOrgResult<T> {
 
     private final RandomInfo<T> random;
 
