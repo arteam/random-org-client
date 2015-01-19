@@ -43,19 +43,11 @@ interface RandomOrgService {
                                               @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement,
                                               @JsonRpcOptional @JsonRpcParam("base") Integer base);
 
-    @JsonRpcMethod("generateIntegers")
-    RandomOrgResult<Integer> generateIntegers(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
-                                              @JsonRpcParam("min") int min, @JsonRpcParam("max") int max);
-
     @JsonRpcMethod("generateDecimalFractions")
     RandomOrgResult<Double> generateDecimalFractions(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
                                                      @JsonRpcParam("decimalPlaces") int decimalPlaces,
                                                      @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement,
                                                      @JsonRpcOptional @JsonRpcParam("base") Integer base);
-
-    @JsonRpcMethod("generateDecimalFractions")
-    RandomOrgResult<Double> generateDecimalFractions(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,
-                                                     @JsonRpcParam("decimalPlaces") int decimalPlaces);
 
     @JsonRpcMethod("generateGaussians")
     RandomOrgResult<Double> generateGaussians(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n,

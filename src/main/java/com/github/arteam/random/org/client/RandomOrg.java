@@ -64,7 +64,7 @@ public class RandomOrg {
 
     @NotNull
     public List<Integer> generateIntegers(int amount, int min, int max) {
-        return service.generateIntegers(apiKey, amount, min, max)
+        return service.generateIntegers(apiKey, amount, min, max, null, null)
                 .getRandom().getData();
     }
 
@@ -76,13 +76,13 @@ public class RandomOrg {
     }
 
     public List<Double> generateDecimalFractions(int amount, int decimalPlaces) {
-        return service.generateDecimalFractions(apiKey, amount, decimalPlaces)
+        return service.generateDecimalFractions(apiKey, amount, decimalPlaces, null, null)
                 .getRandom().getData();
     }
 
     public List<Double> generateDecimalFractions(int amount, int decimalPlaces,
                                                  @Nullable Boolean replacement, @Nullable Integer base) {
-        return service.generateDecimalFractions(apiKey, amount, decimalPlaces, null, null)
+        return service.generateDecimalFractions(apiKey, amount, decimalPlaces, replacement, base)
                 .getRandom().getData();
     }
 
