@@ -60,4 +60,7 @@ interface RandomOrgService {
                                             @JsonRpcParam("length") int length,
                                             @JsonRpcParam("characters") String characters,
                                             @JsonRpcOptional @JsonRpcParam("replacement") Boolean replacement);
+
+    @JsonRpcMethod("generateUUIDs")
+    RandomOrgResult<String> generateUUIDs(@JsonRpcParam("apiKey") String apiKey, @JsonRpcParam("n") int n);
 }

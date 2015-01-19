@@ -95,6 +95,10 @@ public class RandomOrg {
         return service.generateStrings(apiKey, amount, length, ALPHABET, null).getRandom().getData();
     }
 
+    public List<String> generateUUIDs(int amount) {
+        return service.generateUUIDs(apiKey, amount).getRandom().getData();
+    }
+
     public void stop() {
         try {
             httpClient.close();

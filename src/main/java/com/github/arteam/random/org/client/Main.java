@@ -30,5 +30,10 @@ public class Main {
 
         List<String> randomStrings = randomOrg.generateStrings(10, 8);
         System.out.println("Random strings: " + randomStrings);
+
+        List<String> randomUUIDs = randomOrg.generateUUIDs(10);
+        System.out.println("Random UUIDs: " + randomUUIDs);
+
+        randomOrg.stop();
     }
 }
