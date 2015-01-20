@@ -39,9 +39,18 @@ public class RandomOrg {
     private final String apiKey;
     private CloseableHttpClient httpClient;
     private RandomOrgService service;
+    private URI gateway = RANDOM_ORG_GATEWAY;
+    private IdGenerator<Long> idGenerator = new CurrentTimeIdGenerator();
 
     public RandomOrg(String apiKey) {
         this.apiKey = apiKey;
+        start();
+    }
+
+    RandomOrg(String apiKey, URI gateway, IdGenerator<Long> idGenerator) {
+        this.apiKey = apiKey;
+        this.gateway = gateway;
+        this.idGenerator = idGenerator;
         start();
     }
 
@@ -49,7 +58,7 @@ public class RandomOrg {
         httpClient = HttpClients.createDefault();
         service = new JsonRpcClient(request -> {
             System.out.println("Request: " + request);
-            HttpPost httpPost = new HttpPost(RANDOM_ORG_GATEWAY);
+            HttpPost httpPost = new HttpPost(gateway);
             httpPost.setEntity(new StringEntity(request, StandardCharsets.UTF_8));
             try (CloseableHttpResponse response = httpClient.execute(httpPost)) {
                 String data = EntityUtils.toString(response.getEntity());
@@ -59,7 +68,7 @@ public class RandomOrg {
         }, new ObjectMapper()
                 .configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
                 .setDateFormat(RANDOM_ORG_DATE_FORMAT))
-                .onDemand(RandomOrgService.class);
+                .onDemand(RandomOrgService.class, idGenerator);
     }
 
     @NotNull

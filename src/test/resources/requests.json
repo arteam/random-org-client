@@ -1,0 +1,37 @@
+{
+        "generateIntegers": {
+            "request": {
+                "jsonrpc": "2.0",
+                "method": "generateIntegers",
+                "params": {
+                    "apiKey": "6b1e65b9-4186-45c2-8981-b77a9842c4f0",
+                    "n": 6,
+                    "min": 1,
+                    "max": 6,
+                    "replacement": true
+                },
+                "id": 42
+            },
+            "response": {
+                "jsonrpc": "2.0",
+                "result": {
+                    "random": {
+                        "data": [
+                            1,
+                            5,
+                            4,
+                            6,
+                            6,
+                            4
+                        ],
+                        "completionTime": "2011-10-10 13:19:12Z"
+                    },
+                    "bitsUsed": 16,
+                    "bitsLeft": 199984,
+                    "requestsLeft": 9999,
+                    "advisoryDelay": 0
+                },
+                "id": 42
+            }
+        }
+    }
