@@ -30,16 +30,14 @@ public class RandomOrgTest {
         httpServer = HttpServer.create(new InetSocketAddress(8365), 0);
         httpServer.createContext("/", httpExchange -> {
             Assert.assertEquals(httpExchange.getRequestMethod(), "POST");
-            try (Reader reader = new InputStreamReader(httpExchange.getRequestBody());
-                 OutputStreamWriter writer = new OutputStreamWriter(httpExchange.getResponseBody())) {
-                JsonNode jsonRequest = objectMapper.readTree(reader);
+            try {
+                JsonNode jsonRequest = objectMapper.readTree(httpExchange.getRequestBody());
                 String method = jsonRequest.get("method").asText();
                 JsonNode jsonRequestResponse = spec.get(method);
                 Assert.assertEquals(jsonRequestResponse.get("request"), jsonRequest);
 
-                String response = objectMapper.writeValueAsString(jsonRequestResponse.get("response"));
-                writer.write(response);
                 httpExchange.sendResponseHeaders(200, 0);
+                objectMapper.writeValue(httpExchange.getResponseBody(), jsonRequestResponse.get("response"));
             } finally {
                 httpExchange.close();
             }
